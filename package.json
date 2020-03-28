@@ -1,0 +1,27 @@
+{
+  "name": "guess-mind",
+  "version": "1.0.0",
+  "description": "Catch Mind clone. Realtime Drawing Game built with Socket IO, Gulp and Node",
+  "main": "index.js",
+  "repository": "https://github.com/sonyun247/guess-mind.git",
+  "author": "LEE Seungje <38553239+sonyun247@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2",
+    "pug": "^2.0.4",
+    "socket.io": "^2.3.0"
+  },
+  "scripts": {
+    "dev:server": "nodemon --exec babel-node src/server"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^2.0.2"
+  }
+}
