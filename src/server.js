@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import app from "./app";
 import socketIO from "socket.io";
+import socketController from "./socketController";
 
 dotenv.config();
 
@@ -14,14 +15,4 @@ const handleListening = () =>
 const server = app.listen(PORT, handleListening);
 const io = socketIO.listen(server);
 
-io.on("connection", socket => {
-  socket.on("setNickname", ({ nickname }) => {
-    socket.nickname = nickname;
-  });
-  socket.on("sendMessage", ({ message }) => {
-    socket.broadcast.emit("incomingMessage", {
-      nickname: socket.nickname || "anonymous",
-      message
-    });
-  });
-});
+io.on("connection", socket => socketController(socket));

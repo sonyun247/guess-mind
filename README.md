@@ -10,3 +10,4 @@ Catch Mind Clone - Realtime Drawing Game built with Socket IO, Gulp and Node
 - [x] SocketIO
 - [x] ESLint
 - [x] Gulp
+- [x] Login
