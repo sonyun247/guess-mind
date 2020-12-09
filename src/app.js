@@ -2,6 +2,7 @@ import express from "express";
 import { join } from "path";
 import morgan from "morgan";
 import events from "./events";
+import socketController from "./socketController";
 
 const app = express();
 
