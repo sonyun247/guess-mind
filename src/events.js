@@ -14,6 +14,7 @@ const events = {
   playerUpdate: "playerUpdate",
   gameStarted: "gameStarted",
   painterNotif: "painterNotif",
+  gameStarting: "gameStarting",
   gameEnded: "gameEnded"
 };
 
