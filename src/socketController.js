@@ -5,6 +5,7 @@ let sockets = [];
 let inProgress = false;
 let word = null;
 let painter = null;
+let timeout = null;
 
 const choosePainter = () => sockets[Math.floor(Math.random() * sockets.length)];
 
@@ -13,20 +14,27 @@ const socketController = (socket, io) => {
   const superBroadcast = (event, data) => io.emit(event, data);
   const sendPlayerUpdate = () => superBroadcast(events.playerUpdate, { sockets });
   const startGame = () => {
-    if (inProgress === false) {
-      inProgress = true;
-      painter = choosePainter();
-      word = chooseWord();
-      superBroadcast(events.gameStarting);
-      setTimeout(() => {
-        superBroadcast(events.gameStarted);
-        io.to(painter.id).emit(events.painterNotif, { word });
-      }, 2000);
+    if (sockets.length > 1) {
+      if (inProgress === false) {
+        inProgress = true;
+        painter = choosePainter();
+        word = chooseWord();
+        superBroadcast(events.gameStarting);
+        setTimeout(() => {
+          superBroadcast(events.gameStarted);
+          io.to(painter.id).emit(events.painterNotif, { word });
+          timeout = setTimeout(endGame, 30000);
+        }, 5000);
+      }
     }
   };
   const endGame = () => {
     inProgress = false;
     superBroadcast(events.gameEnded);
+    if (timeout !== null) {
+      clearTimeout(timeout);
+    }
+    setTimeout(() => startGame(), 2000);
   };
 
   const addPoints = id => {
@@ -45,9 +53,7 @@ const socketController = (socket, io) => {
     sockets.push({ id: socket.id, points: 0, nickname: nickname });
     broadcast(events.newUser, { nickname });
     sendPlayerUpdate();
-    if (sockets.length === 2) {
-      startGame();
-    }
+    startGame();
   });
 
   socket.on(events.disconnect, () => {
